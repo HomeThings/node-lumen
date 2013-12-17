@@ -31,8 +31,10 @@ function Lumen(peripheral) {
   this._characteristics = {};
 
   this.uuid = peripheral.uuid;
-  this.id = peripheral.advertisement.manufacturerData.toString('hex').match(/.{1,2}/g).reverse().join(':');
-  this.address = this.id.substring(0, 17);
+  try {
+    this.id = peripheral.advertisement.manufacturerData.toString('hex').match(/.{1,2}/g).reverse().join(':');
+    this.address = this.id.substring(0, 17);
+  } catch(ex) {}
 
   this._keepAliveTimer = null;
 
