@@ -31,10 +31,13 @@ function Lumen(peripheral) {
   this._characteristics = {};
 
   this.uuid = peripheral.uuid;
-  try {
+
+  var manufacturerData = peripheral.advertisement.manufacturerData;
+
+  if (manufacturerData && manufacturerData.length === 8) {
     this.id = peripheral.advertisement.manufacturerData.toString('hex').match(/.{1,2}/g).reverse().join(':');
     this.address = this.id.substring(0, 17);
-  } catch(ex) {}
+  }
 
   this._keepAliveTimer = null;
 
